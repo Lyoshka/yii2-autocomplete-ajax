@@ -1,6 +1,6 @@
 <?php
 
-namespace keygenqt\autocompleteAjax;
+namespace lyoshka\autocompleteAjax;
 
 use yii\helpers\Html;
 use yii\helpers\Url;
