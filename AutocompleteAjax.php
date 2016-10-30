@@ -169,7 +169,7 @@ class AutocompleteAjax extends InputWidget
                         success: function(data) {
 
                             if (data.length == 0) {
-                                $('#{$this->getId()}').attr('placeholder', 'User not found !!!');
+                                $('#{$this->getId()}').attr('placeholder', 'No data found');
                             } else {
                                 var arr = [];
                                 for (var i = 0; i<data.length; i++) {
@@ -190,9 +190,11 @@ class AutocompleteAjax extends InputWidget
         
         return Html::tag('div', 
                 
-            Html::activeHiddenInput($this->model, $this->attribute, ['id' => $this->getId() . '-hidden', 'class' => 'form-control'])
-            . ($value ? Html::tag('div', "<img src='{$this->registerActiveAssets()}/images/load.gif'/>", ['class' => 'autocomplete-image-load']) : '')
-            . Html::textInput('', '', array_merge($this->options, ['id' => $this->getId(), 'class' => 'form-control']))
+        Html::activeHiddenInput($this->model, $this->attribute, ['id' => $this->getId() . '-hidden', 'class' => 'form-control'])
+        . ($value ? Html::tag('div', "<img src='{$this->registerActiveAssets()}/images/load.gif'/>", ['class' => 'autocomplete-image-load']) : '')
+	    . Html::activeTextInput($this->model, $this->attribute, array_merge($this->options, ['id' => $this->getId()]))	
+	    //. Html::activeTextInput($this->model, $this->attribute, array_merge($this->options, ['id' => $this->model->formName() . '[' . $this->attribute . ']']))	
+        //. Html::textInput($this->attribute, $this->model->diagnoz, array_merge($this->options, ['id' => $this->getId()]))
               
             , [
                 'style' => 'position: relative;'
