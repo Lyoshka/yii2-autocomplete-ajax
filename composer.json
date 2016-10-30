@@ -9,8 +9,7 @@
 	"authors": [
 		{
 			"name": "Ermolaev Aleksey",
-			"email": "boygruv@gmail.com",
-			"role": "Developer"
+			"email": "boygruv@gmail.com"
 		}
 	],
 	"require": {
