@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\InputWidget;
 
-class AutocompleteAjax extends InputWidget
+class AutocompleteAjax2 extends InputWidget
 {
     public $multiple = false;
     public $url = [];
@@ -192,10 +192,9 @@ class AutocompleteAjax extends InputWidget
                 
         Html::activeHiddenInput($this->model, $this->attribute, ['id' => $this->getId() . '-hidden', 'class' => 'form-control'])
         . ($value ? Html::tag('div', "<img src='{$this->registerActiveAssets()}/images/load.gif'/>", ['class' => 'autocomplete-image-load']) : '')
-	  //  . Html::activeTextInput($this->model, $this->attribute . '33', array_merge($this->options, ['id' => $this->getId()]))	
-	//. Html::activeTextInput($this->model, $this->attribute, array_merge($this->options, ['id' => $this->model->formName() . '[' . $this->attribute . ']']))	
-	. Html::activeTextInput($this->model, $this->attribute, array_merge($this->options, ['id' => $this->getId()]))	
-        //. Html::textInput('', '', array_merge($this->options, ['id' => $this->getId()]))
+	    //. Html::activeTextInput($this->model, $this->attribute, array_merge($this->options, ['id' => $this->getId()]))	
+	    //. Html::activeTextInput($this->model, $this->attribute, array_merge($this->options, ['id' => $this->model->formName() . '[' . $this->attribute . ']']))	
+           . Html::textInput('', '', array_merge($this->options, ['id' => $this->getId()]))
               
             , [
                 'style' => 'position: relative;'
