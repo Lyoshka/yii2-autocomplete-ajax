@@ -36,6 +36,11 @@ class AutocompleteAjax2 extends InputWidget
         $value = $this->model->{$this->attribute};
         $this->registerActiveAssets();
 
+	if ( $this->attribute == 'user_id')  {
+	    $str_ID = str_replace('-','_','studies-user_id');
+	    $this->setID('studies-user_id');
+	}
+
         if ($this->multiple) {
             
             $this->getView()->registerJs("
@@ -53,7 +58,7 @@ class AutocompleteAjax2 extends InputWidget
                         var ids = [];
                         for (var i = 0; i<val.length; i++) {
                             val[i] = val[i].replace(',', '').trim();
-                            ids[i] = cache_{$this->getId()}_1[val[i]];
+                            ids[i] = cache_{$str_ID}_1[val[i]];
                         }
                         $('#{$this->getId()}-hidden').val(ids.join(', '));
                         $('#{$this->getId()}-hidden').change();
@@ -77,10 +82,10 @@ class AutocompleteAjax2 extends InputWidget
                     return submit_{$this->getId()};
                 });
 
-                var submit_{$this->getId()} = false;
-                var cache_{$this->getId()} = {};
-                var cache_{$this->getId()}_1 = {};
-                var cache_{$this->getId()}_2 = {};
+                var submit_{$str_ID} = false;
+                var cache_{$str_ID} = {};
+                var cache_{$str_ID}_1 = {};
+                var cache_{$str_ID}_2 = {};
                 jQuery('#{$this->getId()}').autocomplete(
                 {
                     minLength: 1,
@@ -88,17 +93,17 @@ class AutocompleteAjax2 extends InputWidget
                     {
                         var term = request.term;
 
-                        if (term in cache_{$this->getId()}) {
-                            response( cache_{$this->getId()}[term]);
+                        if (term in cache_{$str_ID}) {
+                            response( cache_{$str_ID}[term]);
                             return;
                         }
                         $.getJSON('{$this->getUrl()}', request, function( data, status, xhr ) {
-                            cache_{$this->getId()} [term] = data;
+                            cache_{$str_ID} [term] = data;
                                 
                             for (var i = 0; i<data.length; i++) {
                                 if (!(data[i].id in cache_{$this->getId()}_2)) {
-                                    cache_{$this->getId()}_1[data[i].label] = data[i].id;
-                                    cache_{$this->getId()}_2[data[i].id] = data[i].label;
+                                    cache_{$str_ID}_1[data[i].label] = data[i].id;
+                                    cache_{$str_ID}_2[data[i].id] = data[i].label;
                                 }
                             }
 
@@ -120,7 +125,7 @@ class AutocompleteAjax2 extends InputWidget
 
                         var names = [];
                         for (var i = 0; i<val.length; i++) {
-                            names[i] = cache_{$this->getId()}_2[val[i]];
+                            names[i] = cache_{$str_ID}_2[val[i]];
                         }
 
                         setTimeout(function() {
@@ -131,21 +136,21 @@ class AutocompleteAjax2 extends InputWidget
             ");
         } else {
             $this->getView()->registerJs("
-                var cache_{$this->getId()} = {};
-                var cache_{$this->getId()}_1 = {};
-                var cache_{$this->getId()}_2 = {};
+                var cache_{$str_ID} = {};
+                var cache_{$str_ID}_1 = {};
+                var cache_{$str_ID}_2 = {};
                 jQuery('#{$this->getId()}').autocomplete(
                 {
                     minLength: 1,
                     source: function( request, response )
                     {
                         var term = request.term;
-                        if ( term in cache_{$this->getId()} ) {
-                            response( cache_{$this->getId()} [term] );
+                        if ( term in cache_{$str_ID} ) {
+                            response( cache_{$str_ID} [term] );
                             return;
                         }
                         $.getJSON('{$this->getUrl()}', request, function( data, status, xhr ) {
-                            cache_{$this->getId()} [term] = data;
+                            cache_{$str_ID} [term] = data;
                             response(data);
                         });
                     },
@@ -174,9 +179,9 @@ class AutocompleteAjax2 extends InputWidget
                                 var arr = [];
                                 for (var i = 0; i<data.length; i++) {
                                     arr[i] = data[i].label;
-                                    if (!(data[i].id in cache_{$this->getId()}_2)) {
-                                        cache_{$this->getId()}_1[data[i].label] = data[i].id;
-                                        cache_{$this->getId()}_2[data[i].id] = data[i].label;
+                                    if (!(data[i].id in cache_{$str_ID}_2)) {
+                                        cache_{$str_ID}_1[data[i].label] = data[i].id;
+                                        cache_{$str_ID}_2[data[i].id] = data[i].label;
                                     }
                                 }
                                 $('#{$this->getId()}').val(arr.join(', '));
